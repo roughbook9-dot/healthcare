@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Health Care Support – Professional Patient Care & Nursing Services</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --teal: #0a7c6e;
@@ -19,296 +19,299 @@
     --red: #e74c3c;
     --radius: 18px;
   }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+  }
 
   /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5vw; height: 72px;
-    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(10,124,110,0.12);
-    animation: slideDown .5s ease; transition: box-shadow .3s;
+    animation: slideDown .5s ease;
   }
-  nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
+
   @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: none; opacity:1; } }
 
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .nav-logo svg { width: 40px; height: 40px; }
-  .nav-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--navy); line-height: 1.1; }
+  .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--navy); line-height: 1.1; }
   .nav-logo-text span { color: var(--teal); font-size: .7rem; font-family: 'DM Sans', sans-serif; font-weight: 500; letter-spacing: .05em; display: block; }
 
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .9rem; transition: color .2s; position: relative; padding-bottom: 4px; }
-  .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--teal); transform: scaleX(0); transition: transform .25s; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .9rem; transition: color .2s; }
   .nav-links a:hover { color: var(--teal); }
-  .nav-links a:hover::after { transform: scaleX(1); }
 
-  .nav-cta { background: var(--teal); color: var(--white); border: none; padding: 10px 22px; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .9rem; cursor: pointer; transition: background .2s, transform .15s; text-decoration: none; }
+  .nav-cta {
+    background: var(--teal); color: var(--white);
+    border: none; padding: 10px 22px; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: .9rem;
+    cursor: pointer; transition: background .2s, transform .15s;
+    text-decoration: none;
+  }
   .nav-cta:hover { background: var(--teal-light); transform: scale(1.04); }
 
-  /* HAMBURGER */
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; border-radius: 8px; transition: background .2s; z-index: 1100; }
-  .hamburger:hover { background: var(--teal-pale); }
-  .hamburger span { width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: transform .35s, opacity .35s, background .2s; display: block; }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--teal); }
-  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--teal); }
-
-  /* MOBILE MENU */
-  .mobile-menu { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(13,43,69,0.97); backdrop-filter: blur(8px); flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity .35s; }
-  .mobile-menu.open { opacity: 1; }
-  .mobile-menu ul { list-style: none; text-align: center; width: 100%; }
-  .mobile-menu ul li { border-bottom: 1px solid rgba(255,255,255,0.08); transform: translateY(30px); opacity: 0; transition: transform .4s, opacity .4s; }
-  .mobile-menu.open ul li { transform: none; opacity: 1; }
-  .mobile-menu.open ul li:nth-child(1) { transition-delay: .05s; }
-  .mobile-menu.open ul li:nth-child(2) { transition-delay: .1s; }
-  .mobile-menu.open ul li:nth-child(3) { transition-delay: .15s; }
-  .mobile-menu.open ul li:nth-child(4) { transition-delay: .2s; }
-  .mobile-menu ul li a { display: flex; align-items: center; justify-content: space-between; padding: 22px 8vw; text-decoration: none; color: rgba(255,255,255,0.85); font-size: 1.3rem; font-weight: 600; transition: color .2s, background .2s; }
-  .mobile-menu ul li a:hover { color: var(--gold); background: rgba(255,255,255,0.04); }
-  .menu-tag { font-size: .7rem; background: var(--teal); color: white; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
-  .menu-arrow { font-size: 1rem; opacity: .5; }
-  .mobile-menu-cta { margin-top: 2rem; padding: 0 8vw; width: 100%; transform: translateY(30px); opacity: 0; transition: transform .4s .25s, opacity .4s .25s; }
-  .mobile-menu.open .mobile-menu-cta { transform: none; opacity: 1; }
-  .mobile-menu-cta a { display: block; text-align: center; background: var(--gold); color: var(--navy); padding: 16px; border-radius: 50px; font-weight: 700; font-size: 1.05rem; text-decoration: none; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--navy); border-radius: 2px; transition: .3s; }
 
   /* ── HERO ── */
-  .hero { min-height: 100vh; background: linear-gradient(135deg, #0d2b45 0%, #0a7c6e 60%, #12a08f 100%); display: flex; align-items: center; padding: 100px 5vw 60px; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0d2b45 0%, #0a7c6e 60%, #12a08f 100%);
+    display: flex; align-items: center;
+    padding: 100px 5vw 60px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
   .hero-content { flex: 1; max-width: 560px; z-index: 1; animation: fadeUp .8s ease both; }
+
   @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform:none; } }
-  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); color: var(--white); padding: 6px 16px; border-radius: 50px; font-size: .8rem; font-weight: 500; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.25); }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.15); color: var(--white);
+    padding: 6px 16px; border-radius: 50px; font-size: .8rem; font-weight: 500;
+    margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.25);
+  }
   .hero-badge-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; animation: pulse 1.5s infinite; }
   @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.4); } }
-  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); color: var(--white); line-height: 1.1; margin-bottom: 1.2rem; }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    color: var(--white); line-height: 1.1; margin-bottom: 1.2rem;
+  }
   .hero h1 em { color: var(--gold); font-style: normal; }
+
   .hero p { color: rgba(255,255,255,0.8); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
+
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary { background: var(--gold); color: var(--navy); padding: 14px 28px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: .95rem; transition: transform .15s, box-shadow .15s; box-shadow: 0 4px 20px rgba(244,166,29,0.4); }
+
+  .btn-primary {
+    background: var(--gold); color: var(--navy);
+    padding: 14px 28px; border-radius: 50px; font-weight: 700;
+    text-decoration: none; font-size: .95rem;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 20px rgba(244,166,29,0.4);
+  }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(244,166,29,0.5); }
-  .btn-outline { background: transparent; color: var(--white); padding: 14px 28px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: .95rem; border: 2px solid rgba(255,255,255,0.5); transition: border-color .2s, background .2s; }
+
+  .btn-outline {
+    background: transparent; color: var(--white);
+    padding: 14px 28px; border-radius: 50px; font-weight: 600;
+    text-decoration: none; font-size: .95rem;
+    border: 2px solid rgba(255,255,255,0.5);
+    transition: border-color .2s, background .2s;
+  }
   .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
-  .hero-stats { display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; }
-  .stat { color: var(--white); cursor: pointer; transition: transform .2s; }
-  .stat:hover { transform: translateY(-3px); }
+
+  .hero-stats {
+    display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;
+  }
+  .stat { color: var(--white); }
   .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; display: block; }
   .stat-lbl { font-size: .8rem; color: rgba(255,255,255,0.6); }
-  .hero-visual { flex: 1; display: flex; justify-content: flex-end; align-items: center; z-index: 1; animation: fadeUp .8s .2s ease both; }
-  .hero-card { background: rgba(255,255,255,0.12); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 2rem; max-width: 320px; width: 100%; }
+
+  .hero-visual {
+    flex: 1; display: flex; justify-content: flex-end; align-items: center;
+    z-index: 1; animation: fadeUp .8s .2s ease both;
+  }
+
+  .hero-card {
+    background: rgba(255,255,255,0.12); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 24px; padding: 2rem;
+    max-width: 320px; width: 100%;
+  }
   .hero-card h3 { color: var(--white); font-size: 1rem; margin-bottom: 1rem; }
-  .service-pill { display: inline-block; background: rgba(255,255,255,0.15); color: var(--white); padding: 6px 14px; border-radius: 50px; font-size: .8rem; margin: 4px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: background .2s, transform .15s; }
-  .service-pill:hover { background: rgba(255,255,255,0.3); transform: scale(1.06); }
-  .availability { margin-top: 1.5rem; padding: 12px; background: rgba(244,166,29,0.2); border-radius: 12px; display: flex; align-items: center; gap: 10px; }
+  .service-pill {
+    display: inline-block; background: rgba(255,255,255,0.15);
+    color: var(--white); padding: 6px 14px; border-radius: 50px;
+    font-size: .8rem; margin: 4px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .availability {
+    margin-top: 1.5rem; padding: 12px; background: rgba(244,166,29,0.2);
+    border-radius: 12px; display: flex; align-items: center; gap: 10px;
+  }
   .avail-dot { width: 10px; height: 10px; background: #4caf50; border-radius: 50%; flex-shrink: 0; animation: pulse 1.5s infinite; }
   .availability p { color: var(--white); font-size: .85rem; }
 
-  /* SECTIONS */
+  /* ── SECTIONS ── */
   section { padding: 80px 5vw; }
   .section-label { color: var(--teal); font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: .5rem; }
   .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--navy); margin-bottom: 1rem; }
   .section-sub { color: var(--muted); font-size: 1rem; max-width: 520px; line-height: 1.7; }
 
-  /* SERVICES */
+  /* ── SERVICES ── */
   .services-bg { background: var(--gray); }
-  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-  .service-card { background: var(--white); border-radius: var(--radius); padding: 1.8rem; border: 1px solid rgba(10,124,110,0.1); transition: transform .2s, box-shadow .2s, border-color .2s; position: relative; overflow: hidden; cursor: pointer; }
-  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--teal), var(--teal-light)); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .service-card {
+    background: var(--white); border-radius: var(--radius); padding: 1.8rem;
+    border: 1px solid rgba(10,124,110,0.1);
+    transition: transform .2s, box-shadow .2s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
   .service-card:hover::before { transform: scaleX(1); }
-  .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(10,124,110,0.15); border-color: rgba(10,124,110,0.25); }
-  .service-card .learn-more { display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-size: .82rem; font-weight: 600; margin-top: 1rem; opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .2s; }
-  .service-card:hover .learn-more { opacity: 1; transform: none; }
-  .service-icon { width: 52px; height: 52px; background: var(--teal-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; transition: transform .2s; }
-  .service-card:hover .service-icon { transform: scale(1.1) rotate(-3deg); }
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(10,124,110,0.12); }
+  .service-icon {
+    width: 52px; height: 52px; background: var(--teal-pale);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1rem;
+  }
   .service-card h3 { color: var(--navy); font-size: 1rem; font-weight: 600; margin-bottom: .5rem; }
   .service-card p { color: var(--muted); font-size: .875rem; line-height: 1.6; }
 
-  /* SPECIAL CARE */
-  .special-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 2rem; }
-  .care-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-top: 1.5rem; }
-  .care-item { display: flex; align-items: center; gap: 12px; background: var(--white); border: 1px solid rgba(10,124,110,0.12); padding: 14px 18px; border-radius: 12px; transition: background .2s, transform .2s, box-shadow .2s; cursor: pointer; }
-  .care-item:hover { background: var(--teal-pale); transform: translateX(6px); box-shadow: 0 4px 16px rgba(10,124,110,0.1); }
-  .care-item.active { background: var(--teal-pale); border-color: var(--teal); }
+  /* ── SPECIAL CARE ── */
+  .special-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center; margin-top: 2rem;
+  }
+  .care-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+  .care-item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--white); border: 1px solid rgba(10,124,110,0.12);
+    padding: 14px 18px; border-radius: 12px;
+    transition: background .2s, transform .2s;
+  }
+  .care-item:hover { background: var(--teal-pale); transform: translateX(4px); }
   .care-dot { width: 10px; height: 10px; background: var(--red); border-radius: 50%; flex-shrink: 0; }
-  .care-label { color: var(--text); font-weight: 500; font-size: .95rem; flex: 1; }
-  .care-arrow-icon { color: var(--teal); font-size: 1rem; transition: transform .25s; }
-  .care-item.active .care-arrow-icon { transform: rotate(90deg); }
-  .care-detail-popup { background: var(--teal-pale); border-radius: 14px; padding: 1.2rem 1.4rem; border-left: 3px solid var(--teal); display: none; margin-bottom: .4rem; }
-  .care-detail-popup.open { display: block; animation: expandDown .3s ease; }
-  @keyframes expandDown { from { opacity:0; transform: translateY(-8px); } to { opacity:1; transform:none; } }
-  .care-detail-popup p { color: #2a5045; font-size: .875rem; line-height: 1.65; margin-bottom: .8rem; }
-  .popup-book { display: inline-flex; align-items: center; gap: 6px; background: var(--teal); color: white; padding: 8px 18px; border-radius: 50px; text-decoration: none; font-size: .82rem; font-weight: 600; transition: background .2s; }
-  .popup-book:hover { background: var(--teal-light); }
+  .care-item span { color: var(--text); font-weight: 500; font-size: .95rem; }
 
-  .care-visual { background: linear-gradient(145deg, var(--navy), var(--teal)); border-radius: 24px; padding: 2.5rem; color: var(--white); position: sticky; top: 90px; }
+  .care-visual {
+    background: linear-gradient(145deg, var(--navy), var(--teal));
+    border-radius: 24px; padding: 2.5rem; color: var(--white);
+  }
   .care-visual h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem; }
   .care-stat { margin-bottom: 1.2rem; }
   .care-stat-bar { height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; margin-top: 6px; overflow: hidden; }
-  .care-stat-fill { height: 100%; background: var(--gold); border-radius: 3px; width: 0; transition: width 1.2s ease; }
+  .care-stat-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width 1s ease; }
   .care-stat p { display: flex; justify-content: space-between; font-size: .85rem; color: rgba(255,255,255,0.8); }
 
-  /* WHY US */
+  /* ── WHY US ── */
   .why-bg { background: var(--gray); }
   .why-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-  .why-card { background: var(--white); border-radius: var(--radius); padding: 2rem; text-align: center; border: 1px solid rgba(10,124,110,0.08); transition: box-shadow .2s, transform .2s, border-color .2s; cursor: pointer; }
-  .why-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(10,124,110,0.12); border-color: rgba(10,124,110,0.2); }
-  .why-icon { width: 64px; height: 64px; background: linear-gradient(135deg, var(--teal), var(--teal-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem; transition: transform .3s; }
-  .why-card:hover .why-icon { transform: scale(1.12) rotate(5deg); }
+  .why-card {
+    background: var(--white); border-radius: var(--radius); padding: 2rem;
+    text-align: center; border: 1px solid rgba(10,124,110,0.08);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .why-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(10,124,110,0.1); }
+  .why-icon {
+    width: 64px; height: 64px; background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin: 0 auto 1rem; color: var(--white);
+  }
   .why-card h3 { color: var(--navy); font-weight: 600; margin-bottom: .4rem; font-size: .95rem; }
   .why-card p { color: var(--muted); font-size: .85rem; line-height: 1.6; }
 
-  /* CONTACT */
-  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 2rem; }
+  /* ── CONTACT ── */
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: start; margin-top: 2rem;
+  }
   .contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
-  .contact-card { display: flex; align-items: center; gap: 16px; background: var(--gray); border-radius: 14px; padding: 18px 22px; text-decoration: none; transition: background .2s, transform .2s; border: 1px solid rgba(10,124,110,0.1); }
+  .contact-card {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--gray); border-radius: 14px; padding: 18px 22px;
+    text-decoration: none; transition: background .2s, transform .2s;
+    border: 1px solid rgba(10,124,110,0.1);
+  }
   .contact-card:hover { background: var(--teal-pale); transform: translateX(4px); }
-  .contact-icon { width: 46px; height: 46px; background: var(--teal); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .contact-icon {
+    width: 46px; height: 46px; background: var(--teal);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    color: var(--white); font-size: 1.3rem; flex-shrink: 0;
+  }
   .contact-card-text p { font-weight: 600; color: var(--navy); }
   .contact-card-text span { font-size: .85rem; color: var(--muted); }
-  .area-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-pale); color: var(--teal); padding: 10px 18px; border-radius: 50px; font-weight: 600; font-size: .9rem; }
 
-  /* FORM */
+  .area-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal-pale); color: var(--teal);
+    padding: 10px 18px; border-radius: 50px; font-weight: 600; font-size: .9rem;
+  }
+
+  /* ── CONTACT FORM ── */
   .contact-form { display: flex; flex-direction: column; gap: 1rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .form-field { display: flex; flex-direction: column; gap: 6px; }
   .form-field label { font-size: .85rem; font-weight: 600; color: var(--navy); }
-  .form-field input, .form-field select, .form-field textarea { padding: 12px 16px; border: 1.5px solid rgba(10,124,110,0.2); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--text); background: var(--white); transition: border-color .2s, box-shadow .2s; outline: none; }
-  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(10,124,110,0.1); }
+  .form-field input, .form-field select, .form-field textarea {
+    padding: 12px 16px; border: 1.5px solid rgba(10,124,110,0.2);
+    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .9rem;
+    color: var(--text); background: var(--white);
+    transition: border-color .2s, box-shadow .2s; outline: none;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    border-color: var(--teal); box-shadow: 0 0 0 3px rgba(10,124,110,0.1);
+  }
   .form-field textarea { resize: vertical; min-height: 100px; }
-  .form-submit { background: var(--teal); color: var(--white); border: none; padding: 14px 28px; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .95rem; cursor: pointer; transition: background .2s, transform .15s; align-self: flex-start; }
+  .form-submit {
+    background: var(--teal); color: var(--white);
+    border: none; padding: 14px 28px; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .95rem;
+    cursor: pointer; transition: background .2s, transform .15s;
+    align-self: flex-start;
+  }
   .form-submit:hover { background: var(--teal-light); transform: scale(1.03); }
 
-  /* FOOTER */
-  footer { background: var(--navy); color: rgba(255,255,255,0.7); padding: 50px 5vw 30px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.7);
+    padding: 50px 5vw 30px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem;
+  }
   footer h4 { color: var(--white); font-weight: 600; margin-bottom: 1rem; font-size: .95rem; }
   footer ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
   footer ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: .875rem; transition: color .2s; }
   footer ul li a:hover { color: var(--gold); }
   footer p { font-size: .85rem; line-height: 1.7; margin-top: .5rem; }
-  .footer-bottom { grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; font-size: .8rem; color: rgba(255,255,255,0.4); }
-  .footer-logo-text { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--white); font-size: 1.2rem; }
+  .footer-bottom {
+    grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    font-size: .8rem; color: rgba(255,255,255,0.4);
+  }
+  .footer-logo-text { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.2rem; }
 
-  /* FLOAT CTA */
-  .float-cta { position: fixed; bottom: 24px; right: 24px; z-index: 200; background: var(--teal); color: var(--white); padding: 14px 22px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: .9rem; box-shadow: 0 6px 24px rgba(10,124,110,0.4); display: flex; align-items: center; gap: 8px; animation: floatAnim 3s ease-in-out infinite; transition: background .2s; }
+  /* ── FLOATING CTA ── */
+  .float-cta {
+    position: fixed; bottom: 24px; right: 24px; z-index: 200;
+    background: var(--teal); color: var(--white);
+    padding: 14px 22px; border-radius: 50px;
+    text-decoration: none; font-weight: 700; font-size: .9rem;
+    box-shadow: 0 6px 24px rgba(10,124,110,0.4);
+    display: flex; align-items: center; gap: 8px;
+    animation: float 3s ease-in-out infinite;
+    transition: background .2s;
+  }
   .float-cta:hover { background: var(--teal-light); }
-  @keyframes floatAnim { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
-  /* MODAL */
-  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(13,43,69,0.75); backdrop-filter: blur(6px); align-items: center; justify-content: center; padding: 20px; }
-  .modal-overlay.open { display: flex; }
-  .modal-box { background: var(--white); border-radius: 24px; max-width: 560px; width: 100%; overflow: hidden; transform: scale(.9) translateY(24px); opacity: 0; transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s; box-shadow: 0 32px 80px rgba(0,0,0,0.25); }
-  .modal-overlay.open .modal-box { transform: none; opacity: 1; }
-  .modal-header { background: linear-gradient(135deg, var(--navy), var(--teal)); padding: 2rem 2rem 1.5rem; position: relative; }
-  .modal-header-icon { font-size: 2.8rem; margin-bottom: .8rem; display: block; }
-  .modal-header h2 { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.5rem; }
-  .modal-header p { color: rgba(255,255,255,0.75); font-size: .9rem; margin-top: .4rem; }
-  .modal-close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; background: rgba(255,255,255,0.15); border: none; border-radius: 50%; color: white; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, transform .2s; }
-  .modal-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
-  .modal-body { padding: 1.8rem 2rem; }
-  .modal-features { list-style: none; display: flex; flex-direction: column; gap: .8rem; margin-bottom: 1.5rem; }
-  .modal-features li { display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; line-height: 1.5; color: var(--text); }
-  .modal-features li::before { content: '✓'; width: 20px; height: 20px; background: var(--teal-pale); color: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-  .modal-cta { display: flex; gap: 1rem; }
-  .modal-cta a { flex: 1; text-align: center; padding: 13px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: .9rem; transition: transform .15s, box-shadow .15s; }
-  .modal-cta a.mc-primary { background: var(--teal); color: white; box-shadow: 0 4px 16px rgba(10,124,110,0.3); }
-  .modal-cta a.mc-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,124,110,0.4); }
-  .modal-cta a.mc-secondary { background: var(--teal-pale); color: var(--teal); border: 2px solid rgba(10,124,110,0.2); }
-  .modal-cta a.mc-secondary:hover { background: var(--teal); color: white; }
-
-  /* TOAST */
-  .toast { position: fixed; bottom: 90px; right: 24px; z-index: 3000; background: var(--navy); color: white; padding: 14px 20px; border-radius: 14px; font-size: .875rem; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px; transform: translateY(20px) scale(.95); opacity: 0; transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .3s; pointer-events: none; max-width: 320px; }
-  .toast.show { transform: none; opacity: 1; }
-  .toast-icon { font-size: 1.2rem; flex-shrink: 0; }
-
-  /* ── MUSIC TOGGLE BUTTON ── */
-  .music-toggle {
-    position: fixed;
-    bottom: 24px;
-    left: 24px;
-    z-index: 200;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--navy);
-    border: 2px solid rgba(255,255,255,0.2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    transition: background .3s, transform .2s, box-shadow .3s;
-    overflow: hidden;
-  }
-  .music-toggle:hover {
-    background: var(--teal);
-    transform: scale(1.1);
-    box-shadow: 0 6px 28px rgba(10,124,110,0.4);
-  }
-  .music-toggle .bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    height: 18px;
-  }
-  .music-toggle .bars span {
-    width: 3px;
-    background: var(--white);
-    border-radius: 2px;
-    transition: height .3s;
-  }
-  .music-toggle.playing .bars span {
-    animation: musicBar 0.8s ease-in-out infinite alternate;
-  }
-  .music-toggle.playing .bars span:nth-child(1) { animation-delay: 0s; }
-  .music-toggle.playing .bars span:nth-child(2) { animation-delay: 0.15s; }
-  .music-toggle.playing .bars span:nth-child(3) { animation-delay: 0.3s; }
-  .music-toggle.playing .bars span:nth-child(4) { animation-delay: 0.45s; }
-  .music-toggle:not(.playing) .bars span { height: 4px !important; }
-  @keyframes musicBar {
-    0% { height: 4px; }
-    100% { height: 18px; }
-  }
-  .music-toggle .muted-icon {
-    display: none;
-    font-size: 1.2rem;
-  }
-  .music-tooltip {
-    position: fixed;
-    bottom: 80px;
-    left: 24px;
-    background: var(--navy);
-    color: white;
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: .78rem;
-    font-weight: 500;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity .3s, transform .3s;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 201;
-  }
-  .music-tooltip::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 20px;
-    width: 12px;
-    height: 12px;
-    background: var(--navy);
-    transform: rotate(45deg);
-    border-radius: 2px;
-  }
-  .music-tooltip.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* RESPONSIVE */
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
@@ -319,50 +322,20 @@
     .special-grid, .contact-wrap { grid-template-columns: 1fr; }
     footer { grid-template-columns: 1fr 1fr; }
     .form-row { grid-template-columns: 1fr; }
-    .care-visual { position: static; }
-    .modal-cta { flex-direction: column; }
   }
   @media (max-width: 600px) {
     footer { grid-template-columns: 1fr; }
-    .modal-body { padding: 1.4rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <ul>
-    <li><a href="#services" onclick="closeMenu()">
-      <span>🏥 Our Services</span><span class="menu-tag">8 Services</span>
-    </a></li>
-    <li><a href="#special" onclick="closeMenu()">
-      <span>❤️ Special Care</span><span class="menu-tag">5 Conditions</span>
-    </a></li>
-    <li><a href="#why" onclick="closeMenu()">
-      <span>🛡️ Why Choose Us</span><span class="menu-arrow">›</span>
-    </a></li>
-    <li><a href="#contact" onclick="closeMenu()">
-      <span>📞 Contact</span><span class="menu-arrow">›</span>
-    </a></li>
-  </ul>
-  <div class="mobile-menu-cta">
-    <a href="tel:7888009998" onclick="closeMenu()">📞 Call Now – 7888009998</a>
-  </div>
-</div>
-
 <!-- NAV -->
-<nav id="mainNav">
+<nav>
   <a href="#" class="nav-logo">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
-      <circle cx="50" cy="50" r="47" fill="white" stroke="#3cc8b4" stroke-width="4"/>
-      <rect x="37" y="10" width="26" height="26" rx="5" fill="#2563a8"/>
-      <rect x="10" y="37" width="26" height="26" rx="5" fill="#2563a8"/>
-      <rect x="64" y="37" width="26" height="26" rx="5" fill="#7ac043"/>
-      <rect x="37" y="64" width="26" height="26" rx="5" fill="#7ac043"/>
-      <path d="M18 65 Q28 53 40 58 Q48 62 50 70 Q60 58 68 54 Q75 50 78 57 Q65 76 50 84 Q34 80 18 65Z" fill="white"/>
-      <circle cx="50" cy="26" r="5" fill="white"/>
-      <path d="M50 44 L50 20 M43 27 L50 20 L57 27" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="20" fill="#0a7c6e"/>
+      <path d="M17 12h6v5h5v6h-5v5h-6v-5h-5v-6h5z" fill="white"/>
     </svg>
     <div class="nav-logo-text">Health Care Support<span>Professional Nursing Services</span></div>
   </a>
@@ -373,7 +346,7 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="tel:7888009998" class="nav-cta">📞 Call Now</a>
-  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+  <div class="hamburger" onclick="this.classList.toggle('open')">
     <span></span><span></span><span></span>
   </div>
 </nav>
@@ -381,7 +354,10 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-badge"><span class="hero-badge-dot"></span>24/7 Professional Nursing Available</div>
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      24/7 Professional Nursing Available
+    </div>
     <h1>Compassionate Care<br>For Your <em>Loved Ones</em></h1>
     <p>Professional patient care & nursing services at your doorstep. We serve Bhiwandi & nearby areas with experienced, trusted caretakers.</p>
     <div class="hero-actions">
@@ -389,28 +365,22 @@
       <a href="#services" class="btn-outline">View Services</a>
     </div>
     <div class="hero-stats">
-      <div class="stat" onclick="showToast('🏠','Over 500 families trust us for daily care in Bhiwandi & nearby areas.')">
-        <span class="stat-num">500+</span><span class="stat-lbl">Happy Families</span>
-      </div>
-      <div class="stat" onclick="showToast('🕐','Our caretakers are on call 24 hours a day, 7 days a week — including all holidays.')">
-        <span class="stat-num">24/7</span><span class="stat-lbl">Always Available</span>
-      </div>
-      <div class="stat" onclick="showToast('🎓','Every caretaker is certified, background-checked, and professionally trained.')">
-        <span class="stat-num">100%</span><span class="stat-lbl">Trained Staff</span>
-      </div>
+      <div class="stat"><span class="stat-num">500+</span><span class="stat-lbl">Happy Families</span></div>
+      <div class="stat"><span class="stat-num">24/7</span><span class="stat-lbl">Always Available</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">Trained Staff</span></div>
     </div>
   </div>
   <div class="hero-visual">
     <div class="hero-card">
       <h3>✅ Services Available Now</h3>
-      <span class="service-pill" onclick="openModal(0)">Nursing Care</span>
-      <span class="service-pill" onclick="openModal(1)">Home Visits</span>
-      <span class="service-pill" onclick="openModal(2)">Old Age Care</span>
-      <span class="service-pill" onclick="openModal(3)">Bedridden Care</span>
-      <span class="service-pill" onclick="openModal(4)">Injection / BP</span>
-      <span class="service-pill" onclick="openModal(5)">Medicine Mgmt</span>
-      <span class="service-pill" onclick="openModal(6)">Hospital Attendant</span>
-      <span class="service-pill" onclick="openModal(7)">Male/Female Caretaker</span>
+      <span class="service-pill">Nursing Care</span>
+      <span class="service-pill">Home Visits</span>
+      <span class="service-pill">Old Age Care</span>
+      <span class="service-pill">ICU Care</span>
+      <span class="service-pill">Injection / BP</span>
+      <span class="service-pill">Medicine Mgmt</span>
+      <span class="service-pill">Hospital Attendant</span>
+      <span class="service-pill">Bedridden Care</span>
       <div class="availability">
         <span class="avail-dot"></span>
         <p>Caretakers available in Bhiwandi & nearby areas</p>
@@ -423,55 +393,47 @@
 <section class="services-bg" id="services">
   <div class="section-label">What We Offer</div>
   <div class="section-title">Our Services</div>
-  <div class="section-sub">Complete home healthcare solutions by certified professionals. <strong>Click any card</strong> for full details.</div>
+  <div class="section-sub">Complete home healthcare solutions delivered by certified professionals with compassion and respect.</div>
   <div class="services-grid">
-    <div class="service-card" onclick="openModal(0)">
+    <div class="service-card">
       <div class="service-icon">🏥</div>
       <h3>24 Hours Nursing Service</h3>
       <p>Round-the-clock professional nursing care ensuring your loved one is always attended to.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
-    <div class="service-card" onclick="openModal(1)">
+    <div class="service-card">
       <div class="service-icon">🏠</div>
       <h3>Patient Care at Home</h3>
       <p>Comfortable, professional medical attention delivered right to your home.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
-    <div class="service-card" onclick="openModal(2)">
+    <div class="service-card">
       <div class="service-icon">👴</div>
       <h3>Old Age Care (Buzurgon ki dekhbal)</h3>
       <p>Dedicated elderly care services with respect, dignity, and patience.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
-    <div class="service-card" onclick="openModal(3)">
+    <div class="service-card">
       <div class="service-icon">🛏️</div>
       <h3>Bedridden Patient Care</h3>
-      <p>Specialized attention for patients confined to bed, including hygiene and feeding support.</p>
-      <span class="learn-more">Learn more →</span>
+      <p>Specialized attention for patients who are confined to bed, including hygiene and feeding support.</p>
     </div>
-    <div class="service-card" onclick="openModal(4)">
+    <div class="service-card">
       <div class="service-icon">💉</div>
       <h3>Injection / BP / Sugar Check</h3>
       <p>Trained nurses to administer injections and perform regular vitals monitoring at home.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
-    <div class="service-card" onclick="openModal(5)">
+    <div class="service-card">
       <div class="service-icon">💊</div>
       <h3>Medicine Management</h3>
       <p>Timely medication reminders and administration, ensuring no dose is missed.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
-    <div class="service-card" onclick="openModal(6)">
+    <div class="service-card">
       <div class="service-icon">🏨</div>
       <h3>Hospital Attendant Service</h3>
       <p>Dedicated attendants to accompany and assist patients during hospital stays.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
-    <div class="service-card" onclick="openModal(7)">
+    <div class="service-card">
       <div class="service-icon">👩‍⚕️</div>
       <h3>Female / Male Caretaker</h3>
       <p>Your choice of female or male caretaker to ensure patient comfort and privacy.</p>
-      <span class="learn-more">Learn more →</span>
     </div>
   </div>
 </section>
@@ -480,74 +442,34 @@
 <section id="special">
   <div class="section-label">Specialized Support</div>
   <div class="section-title">Special Care For</div>
-  <div class="section-sub">Expert care for complex conditions. <strong>Click any condition</strong> to see exactly how we help.</div>
+  <div class="section-sub">We provide expert care for patients with complex conditions, handled by trained professionals.</div>
   <div class="special-grid">
     <div>
       <ul class="care-list">
-        <li class="care-item" id="ci0" onclick="toggleCare(0)">
-          <span class="care-dot"></span>
-          <span class="care-label">Paralysis Patients</span>
-          <span class="care-arrow-icon">›</span>
-        </li>
-        <div class="care-detail-popup" id="cp0">
-          <p>Our trained caretakers assist paralysis patients with physiotherapy exercises, mobility support, pressure sore prevention, and daily hygiene. We work alongside medical professionals to maximize recovery potential.</p>
-          <a href="tel:7888009998" class="popup-book">📞 Book This Care</a>
-        </div>
-        <li class="care-item" id="ci1" onclick="toggleCare(1)">
-          <span class="care-dot"></span>
-          <span class="care-label">Surgery Recovery Patients</span>
-          <span class="care-arrow-icon">›</span>
-        </li>
-        <div class="care-detail-popup" id="cp1">
-          <p>Post-operative care including wound dressing, vitals monitoring, medication management, and mobility assistance — all in the comfort of home, coordinated with your surgeon.</p>
-          <a href="tel:7888009998" class="popup-book">📞 Book This Care</a>
-        </div>
-        <li class="care-item" id="ci2" onclick="toggleCare(2)">
-          <span class="care-dot"></span>
-          <span class="care-label">Senior Citizens</span>
-          <span class="care-arrow-icon">›</span>
-        </li>
-        <div class="care-detail-popup" id="cp2">
-          <p>Compassionate elderly care including daily routine assistance, meal preparation, companionship, fall prevention, health monitoring, and regular family updates in Hindi/Urdu/Marathi.</p>
-          <a href="tel:7888009998" class="popup-book">📞 Book This Care</a>
-        </div>
-        <li class="care-item" id="ci3" onclick="toggleCare(3)">
-          <span class="care-dot"></span>
-          <span class="care-label">Disabled Patients</span>
-          <span class="care-arrow-icon">›</span>
-        </li>
-        <div class="care-detail-popup" id="cp3">
-          <p>Personalized support for physical or cognitive disabilities — mobility assistance, therapy exercises, personal hygiene, and community engagement for a dignified, fulfilling life at home.</p>
-          <a href="tel:7888009998" class="popup-book">📞 Book This Care</a>
-        </div>
-        <li class="care-item" id="ci4" onclick="toggleCare(4)">
-          <span class="care-dot"></span>
-          <span class="care-label">ICU / Home Care Patients</span>
-          <span class="care-arrow-icon">›</span>
-        </li>
-        <div class="care-detail-popup" id="cp4">
-          <p>Critical care at home for patients transitioning from ICU — oxygen management, IV care, catheter management, bedsore prevention, and 24/7 monitoring by experienced nurses.</p>
-          <a href="tel:7888009998" class="popup-book">📞 Book This Care</a>
-        </div>
+        <li class="care-item"><span class="care-dot"></span><span>Paralysis Patients</span></li>
+        <li class="care-item"><span class="care-dot"></span><span>Surgery Recovery Patients</span></li>
+        <li class="care-item"><span class="care-dot"></span><span>Senior Citizens</span></li>
+        <li class="care-item"><span class="care-dot"></span><span>Disabled Patients</span></li>
+        <li class="care-item"><span class="care-dot"></span><span>ICU / Home Care Patients</span></li>
       </ul>
     </div>
-    <div class="care-visual" id="careVisual">
+    <div class="care-visual">
       <h3>Our Care Quality Metrics</h3>
       <div class="care-stat">
         <p><span>Patient Satisfaction</span><span>98%</span></p>
-        <div class="care-stat-bar"><div class="care-stat-fill" data-width="98"></div></div>
+        <div class="care-stat-bar"><div class="care-stat-fill" style="width:98%"></div></div>
       </div>
       <div class="care-stat">
         <p><span>On-Time Service</span><span>95%</span></p>
-        <div class="care-stat-bar"><div class="care-stat-fill" data-width="95"></div></div>
+        <div class="care-stat-bar"><div class="care-stat-fill" style="width:95%"></div></div>
       </div>
       <div class="care-stat">
         <p><span>Staff Certification</span><span>100%</span></p>
-        <div class="care-stat-bar"><div class="care-stat-fill" data-width="100"></div></div>
+        <div class="care-stat-bar"><div class="care-stat-fill" style="width:100%"></div></div>
       </div>
       <div class="care-stat">
         <p><span>Response Rate</span><span>92%</span></p>
-        <div class="care-stat-bar"><div class="care-stat-fill" data-width="92"></div></div>
+        <div class="care-stat-bar"><div class="care-stat-fill" style="width:92%"></div></div>
       </div>
     </div>
   </div>
@@ -557,29 +479,29 @@
 <section class="why-bg" id="why">
   <div class="section-label">Why Choose Us</div>
   <div class="section-title">Trusted by Hundreds of Families</div>
-  <div class="section-sub">We combine medical expertise with genuine compassion. <strong>Click any card</strong> to learn more.</div>
+  <div class="section-sub">We combine medical expertise with genuine compassion to deliver care that feels like family.</div>
   <div class="why-grid">
-    <div class="why-card" onclick="showToast('👨‍⚕️','All caretakers hold valid nursing certifications with minimum 2 years of hands-on patient care experience.')">
+    <div class="why-card">
       <div class="why-icon">👨‍⚕️</div>
       <h3>Experienced Caretakers</h3>
       <p>All staff are trained, verified, and experienced in professional patient care.</p>
     </div>
-    <div class="why-card" onclick="showToast('🛡️','Every caretaker undergoes police verification, ID check, and reference checks before onboarding.')">
+    <div class="why-card">
       <div class="why-icon">🛡️</div>
       <h3>Trusted & Reliable</h3>
       <p>Background-checked professionals you can trust with your family members.</p>
     </div>
-    <div class="why-card" onclick="showToast('🕐','Day, night, or holiday — our support line is always open. Emergency response within 1 hour.')">
+    <div class="why-card">
       <div class="why-icon">🕐</div>
       <h3>24x7 Support</h3>
       <p>We're available around the clock. Day, night, weekends — always here for you.</p>
     </div>
-    <div class="why-card" onclick="showToast('💰','Transparent, competitive rates with no hidden charges. Flexible hourly, daily & monthly plans available.')">
+    <div class="why-card">
       <div class="why-icon">💰</div>
       <h3>Affordable Charges</h3>
       <p>Quality healthcare doesn't have to break the bank. Transparent, fair pricing.</p>
     </div>
-    <div class="why-card" onclick="showToast('🏡','We cover Bhiwandi, Thane, Kalyan, Dombivli & surrounding areas. Doorstep care always available.')">
+    <div class="why-card">
       <div class="why-icon">🏡</div>
       <h3>Home Service Available</h3>
       <p>Care delivered where the patient is most comfortable — at home.</p>
@@ -596,17 +518,28 @@
     <div class="contact-info">
       <a href="tel:7888009998" class="contact-card">
         <div class="contact-icon">📞</div>
-        <div class="contact-card-text"><p>7888009998</p><span>Call us anytime</span></div>
+        <div class="contact-card-text">
+          <p>7888009998</p>
+          <span>Call us anytime</span>
+        </div>
       </a>
       <a href="tel:9011071156" class="contact-card">
         <div class="contact-icon">📱</div>
-        <div class="contact-card-text"><p>9011071156</p><span>Alternative number</span></div>
+        <div class="contact-card-text">
+          <p>9011071156</p>
+          <span>Alternative number</span>
+        </div>
       </a>
       <div class="contact-card" style="cursor:default;">
         <div class="contact-icon">📍</div>
-        <div class="contact-card-text"><p>Bhiwandi & Nearby Areas</p><span>Service coverage area</span></div>
+        <div class="contact-card-text">
+          <p>Bhiwandi & Nearby Areas</p>
+          <span>Service coverage area</span>
+        </div>
       </div>
-      <span class="area-badge">📍 Serving Bhiwandi & Nearby Areas</span>
+      <div style="margin-top:.5rem;">
+        <span class="area-badge">📍 Serving Bhiwandi & Nearby Areas</span>
+      </div>
     </div>
     <form class="contact-form" onsubmit="handleSubmit(event)">
       <div class="form-row">
@@ -650,20 +583,20 @@
   <div>
     <h4>Services</h4>
     <ul>
-      <li><a href="#services" onclick="setTimeout(()=>openModal(0),400);return false;">Nursing Care</a></li>
-      <li><a href="#services" onclick="setTimeout(()=>openModal(1),400);return false;">Home Patient Care</a></li>
-      <li><a href="#services" onclick="setTimeout(()=>openModal(2),400);return false;">Old Age Care</a></li>
-      <li><a href="#services" onclick="setTimeout(()=>openModal(3),400);return false;">Bedridden Care</a></li>
-      <li><a href="#services" onclick="setTimeout(()=>openModal(6),400);return false;">Hospital Attendant</a></li>
+      <li><a href="#">Nursing Care</a></li>
+      <li><a href="#">Home Patient Care</a></li>
+      <li><a href="#">Old Age Care</a></li>
+      <li><a href="#">Bedridden Care</a></li>
+      <li><a href="#">Hospital Attendant</a></li>
     </ul>
   </div>
   <div>
     <h4>Special Care</h4>
     <ul>
-      <li><a href="#special" onclick="setTimeout(()=>toggleCare(0),400);return false;">Paralysis Patients</a></li>
-      <li><a href="#special" onclick="setTimeout(()=>toggleCare(1),400);return false;">Surgery Recovery</a></li>
-      <li><a href="#special" onclick="setTimeout(()=>toggleCare(2),400);return false;">Senior Citizens</a></li>
-      <li><a href="#special" onclick="setTimeout(()=>toggleCare(4),400);return false;">ICU Home Care</a></li>
+      <li><a href="#">Paralysis Patients</a></li>
+      <li><a href="#">Surgery Recovery</a></li>
+      <li><a href="#">Senior Citizens</a></li>
+      <li><a href="#">ICU Home Care</a></li>
     </ul>
   </div>
   <div>
@@ -680,296 +613,38 @@
   </div>
 </footer>
 
+<!-- FLOATING CTA -->
 <a href="tel:7888009998" class="float-cta">📞 Call Now</a>
 
-<!-- MUSIC TOGGLE BUTTON -->
-<div class="music-tooltip" id="musicTooltip">🎵 Click to play soothing music</div>
-<button class="music-toggle" id="musicToggle" onclick="toggleMusic()" aria-label="Toggle background music">
-  <div class="bars">
-    <span style="height:4px;"></span>
-    <span style="height:4px;"></span>
-    <span style="height:4px;"></span>
-    <span style="height:4px;"></span>
-  </div>
-</button>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-  <div class="modal-box" id="modalBox">
-    <div class="modal-header">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <span class="modal-header-icon" id="modalIcon"></span>
-      <h2 id="modalTitle"></h2>
-      <p id="modalSubtitle"></p>
-    </div>
-    <div class="modal-body">
-      <ul class="modal-features" id="modalFeatures"></ul>
-      <div class="modal-cta">
-        <a href="tel:7888009998" class="mc-primary">📞 Book Now – 7888009998</a>
-        <a href="#contact" onclick="closeModal()" class="mc-secondary">Send Enquiry</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <span class="toast-icon" id="toastIcon"></span>
-  <span id="toastMsg"></span>
-</div>
-
 <script>
-const services = [
-  { icon:'🏥', title:'24 Hours Nursing Service', subtitle:'Round-the-clock professional nursing at home',
-    features:['Dedicated nurse assigned for full 24-hour shifts','Vital signs monitoring every few hours','Medication administration and tracking','Wound care and dressing changes','Emergency response and doctor coordination','Detailed daily health reports for the family'] },
-  { icon:'🏠', title:'Patient Care at Home', subtitle:'Professional medical attention at your doorstep',
-    features:['Trained nurse or caretaker visits your home','Daily hygiene assistance — bathing, grooming, feeding','Physiotherapy exercises and mobility support','Patient comfort and emotional wellbeing','Coordination with your family doctor','Available for short-term or long-term care'] },
-  { icon:'👴', title:'Old Age Care (Buzurgon ki dekhbal)', subtitle:'Respectful, compassionate care for your elders',
-    features:['Daily routine assistance — meals, hygiene, exercise','Companionship and mental wellness support','Medicine reminders and health monitoring','Fall prevention and mobility assistance','Family updates and communication support','Available in Hindi, Urdu, Marathi'] },
-  { icon:'🛏️', title:'Bedridden Patient Care', subtitle:'Specialized care for immobile patients',
-    features:['Pressure sore prevention and skin care','Tube feeding and catheter management','Regular position changes every 2 hours','Full body hygiene and grooming','Physiotherapy and passive limb exercises','Oxygen and suction support if needed'] },
-  { icon:'💉', title:'Injection / BP / Sugar Check', subtitle:'Vitals monitoring and injections at home',
-    features:['IV injections and subcutaneous shots at home','Blood pressure monitoring twice daily','Blood sugar (glucometer) testing','SpO2 and pulse monitoring','Results communicated to family immediately','Doctor referral if readings are abnormal'] },
-  { icon:'💊', title:'Medicine Management', subtitle:'Never miss a dose again',
-    features:['Personalized medicine schedule creation','Timely reminders and supervised intake','Prescription refill coordination','Drug interaction awareness','Documentation and reporting to doctors','Safe storage and disposal of medicines'] },
-  { icon:'🏨', title:'Hospital Attendant Service', subtitle:'Dedicated support during hospital stays',
-    features:['Round-the-clock attendant at patient\'s bedside','Liaising with hospital nurses and doctors','Assisting with hospital food and hygiene','Family updates every few hours','Patient comfort and emotional support','Accompanying patient during tests and procedures'] },
-  { icon:'👩‍⚕️', title:'Female / Male Caretaker', subtitle:'Your choice for maximum patient comfort',
-    features:['Female caretakers for female patients — privacy assured','Male caretakers for male patients needing physical support','Verified, trained, and background-checked staff','Respectful, dignified, professional approach','Language matching: Hindi / Urdu / Marathi','Flexible shifts — 8hr, 12hr, 24hr options'] }
-];
-
-// HAMBURGER
-function toggleMenu() {
-  const h = document.getElementById('hamburger');
-  const m = document.getElementById('mobileMenu');
-  h.classList.toggle('open');
-  if (h.classList.contains('open')) {
-    m.style.display = 'flex';
-    requestAnimationFrame(() => m.classList.add('open'));
-    document.body.style.overflow = 'hidden';
-  } else {
-    m.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => { if (!m.classList.contains('open')) m.style.display = 'none'; }, 350);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✅ Enquiry Sent!';
+    btn.style.background = '#4caf50';
+    setTimeout(() => {
+      btn.textContent = 'Send Enquiry →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
   }
-}
-function closeMenu() {
-  document.getElementById('hamburger').classList.remove('open');
-  const m = document.getElementById('mobileMenu');
-  m.classList.remove('open');
-  document.body.style.overflow = '';
-  setTimeout(() => { m.style.display = 'none'; }, 350);
-}
 
-// MODAL
-function openModal(i) {
-  const s = services[i];
-  document.getElementById('modalIcon').textContent = s.icon;
-  document.getElementById('modalTitle').textContent = s.title;
-  document.getElementById('modalSubtitle').textContent = s.subtitle;
-  document.getElementById('modalFeatures').innerHTML = s.features.map(f => `<li>${f}</li>`).join('');
-  const overlay = document.getElementById('modalOverlay');
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  const box = document.getElementById('modalBox');
-  box.style.transform = 'scale(.9) translateY(24px)';
-  box.style.opacity = '0';
-  setTimeout(() => {
-    document.getElementById('modalOverlay').classList.remove('open');
-    box.style.transform = ''; box.style.opacity = '';
-    if (!document.getElementById('mobileMenu').classList.contains('open'))
-      document.body.style.overflow = '';
-  }, 280);
-}
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  // Intersection observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
 
-// CARE ITEMS
-function toggleCare(idx) {
-  const popup = document.getElementById('cp' + idx);
-  const item = document.getElementById('ci' + idx);
-  const isOpen = popup.classList.contains('open');
-  // close all
-  for (let i = 0; i < 5; i++) {
-    document.getElementById('cp' + i).classList.remove('open');
-    document.getElementById('ci' + i).classList.remove('active');
-  }
-  if (!isOpen) {
-    popup.classList.add('open');
-    item.classList.add('active');
-    setTimeout(() => popup.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
-  }
-}
-
-// TOAST
-let toastTimer;
-function showToast(icon, msg) {
-  document.getElementById('toastIcon').textContent = icon;
-  document.getElementById('toastMsg').textContent = msg;
-  const t = document.getElementById('toast');
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 4200);
-}
-
-// FORM
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = '✅ Enquiry Sent!';
-  btn.style.background = '#4caf50';
-  showToast('✅', 'Your enquiry has been sent! We\'ll call you shortly.');
-  setTimeout(() => { btn.textContent = 'Send Enquiry →'; btn.style.background = ''; e.target.reset(); }, 3000);
-}
-
-// NAV SCROLL
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
-});
-
-// STAT BARS animate on scroll
-const barObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.care-stat-fill').forEach(b => b.style.width = b.dataset.width + '%');
-      barObs.unobserve(e.target);
-    }
+  document.querySelectorAll('.service-card, .why-card, .care-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease, box-shadow .2s, background .2s, border-color .2s';
+    observer.observe(el);
   });
-}, { threshold: 0.3 });
-barObs.observe(document.getElementById('careVisual'));
-
-// CARDS fade in
-const cardObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.service-card, .why-card').forEach((el, i) => {
-  el.style.opacity = '0'; el.style.transform = 'translateY(24px)';
-  el.style.transition = `opacity .5s ease ${i * 0.05}s, transform .5s ease ${i * 0.05}s, box-shadow .2s, border-color .2s`;
-  cardObs.observe(el);
-});
-
-// ── BACKGROUND MUSIC (Gentle & Polite Ambient) ──
-// Using Web Audio API to generate soft, calming ambient music
-// No external files needed — fully self-contained
-
-let audioCtx = null;
-let musicPlaying = false;
-let musicNodes = [];
-let masterGain = null;
-
-function createAmbientMusic() {
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0;
-  masterGain.connect(audioCtx.destination);
-
-  // Soft pad chord (C major 7 — very gentle)
-  const padFreqs = [130.81, 164.81, 196.00, 246.94, 261.63, 329.63];
-  padFreqs.forEach((freq, i) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
-    gain.gain.value = 0.012 + (i * 0.002);
-    osc.connect(gain);
-    gain.connect(masterGain);
-    osc.start();
-    musicNodes.push({ osc, gain });
-
-    // Gentle frequency wobble for warmth
-    const lfo = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
-    lfo.type = 'sine';
-    lfo.frequency.value = 0.08 + (i * 0.02);
-    lfoGain.gain.value = 0.3 + (i * 0.1);
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-    lfo.start();
-    musicNodes.push({ osc: lfo, gain: lfoGain });
-  });
-
-  // Very soft high shimmer
-  const shimmer = audioCtx.createOscillator();
-  const shimmerGain = audioCtx.createGain();
-  shimmer.type = 'sine';
-  shimmer.frequency.value = 523.25;
-  shimmerGain.gain.value = 0.006;
-  shimmer.connect(shimmerGain);
-  shimmerGain.connect(masterGain);
-  shimmer.start();
-  musicNodes.push({ osc: shimmer, gain: shimmerGain });
-
-  // Shimmer LFO for gentle pulsing
-  const shimLfo = audioCtx.createOscillator();
-  const shimLfoGain = audioCtx.createGain();
-  shimLfo.type = 'sine';
-  shimLfo.frequency.value = 0.15;
-  shimLfoGain.gain.value = 0.004;
-  shimLfo.connect(shimLfoGain);
-  shimLfoGain.connect(shimmerGain.gain);
-  shimLfo.start();
-  musicNodes.push({ osc: shimLfo, gain: shimLfoGain });
-
-  // Gentle volume breathing effect on master
-  const breathLfo = audioCtx.createOscillator();
-  const breathGain = audioCtx.createGain();
-  breathLfo.type = 'sine';
-  breathLfo.frequency.value = 0.05; // Very slow breathing
-  breathGain.gain.value = 0.15;
-  breathLfo.connect(breathGain);
-  breathGain.connect(masterGain.gain);
-  breathLfo.start();
-  musicNodes.push({ osc: breathLfo, gain: breathGain });
-}
-
-function toggleMusic() {
-  const btn = document.getElementById('musicToggle');
-  const tooltip = document.getElementById('musicTooltip');
-
-  if (!musicPlaying) {
-    // Start music
-    if (!audioCtx) {
-      createAmbientMusic();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    // Fade in gently over 2 seconds
-    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 2);
-
-    btn.classList.add('playing');
-    musicPlaying = true;
-    tooltip.textContent = '🔇 Click to mute music';
-    tooltip.classList.add('show');
-    setTimeout(() => tooltip.classList.remove('show'), 2000);
-  } else {
-    // Fade out gently over 1.5 seconds
-    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-
-    btn.classList.remove('playing');
-    musicPlaying = false;
-    tooltip.textContent = '🎵 Click to play soothing music';
-    tooltip.classList.add('show');
-    setTimeout(() => tooltip.classList.remove('show'), 2000);
-  }
-}
-
-// Show tooltip hint after 3 seconds
-setTimeout(() => {
-  const tooltip = document.getElementById('musicTooltip');
-  tooltip.classList.add('show');
-  setTimeout(() => tooltip.classList.remove('show'), 4000);
-}, 3000);
 </script>
 </body>
 </html>
