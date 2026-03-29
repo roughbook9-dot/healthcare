@@ -222,6 +222,92 @@
   .toast.show { transform: none; opacity: 1; }
   .toast-icon { font-size: 1.2rem; flex-shrink: 0; }
 
+  /* ── MUSIC TOGGLE BUTTON ── */
+  .music-toggle {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 200;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 2px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: background .3s, transform .2s, box-shadow .3s;
+    overflow: hidden;
+  }
+  .music-toggle:hover {
+    background: var(--teal);
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(10,124,110,0.4);
+  }
+  .music-toggle .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 18px;
+  }
+  .music-toggle .bars span {
+    width: 3px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: height .3s;
+  }
+  .music-toggle.playing .bars span {
+    animation: musicBar 0.8s ease-in-out infinite alternate;
+  }
+  .music-toggle.playing .bars span:nth-child(1) { animation-delay: 0s; }
+  .music-toggle.playing .bars span:nth-child(2) { animation-delay: 0.15s; }
+  .music-toggle.playing .bars span:nth-child(3) { animation-delay: 0.3s; }
+  .music-toggle.playing .bars span:nth-child(4) { animation-delay: 0.45s; }
+  .music-toggle:not(.playing) .bars span { height: 4px !important; }
+  @keyframes musicBar {
+    0% { height: 4px; }
+    100% { height: 18px; }
+  }
+  .music-toggle .muted-icon {
+    display: none;
+    font-size: 1.2rem;
+  }
+  .music-tooltip {
+    position: fixed;
+    bottom: 80px;
+    left: 24px;
+    background: var(--navy);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: .78rem;
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .3s, transform .3s;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 201;
+  }
+  .music-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    background: var(--navy);
+    transform: rotate(45deg);
+    border-radius: 2px;
+  }
+  .music-tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   /* RESPONSIVE */
   @media (max-width: 900px) {
     .nav-links, .nav-cta { display: none; }
@@ -596,6 +682,17 @@
 
 <a href="tel:7888009998" class="float-cta">📞 Call Now</a>
 
+<!-- MUSIC TOGGLE BUTTON -->
+<div class="music-tooltip" id="musicTooltip">🎵 Click to play soothing music</div>
+<button class="music-toggle" id="musicToggle" onclick="toggleMusic()" aria-label="Toggle background music">
+  <div class="bars">
+    <span style="height:4px;"></span>
+    <span style="height:4px;"></span>
+    <span style="height:4px;"></span>
+    <span style="height:4px;"></span>
+  </div>
+</button>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal-box" id="modalBox">
@@ -756,33 +853,123 @@ document.querySelectorAll('.service-card, .why-card').forEach((el, i) => {
   el.style.transition = `opacity .5s ease ${i * 0.05}s, transform .5s ease ${i * 0.05}s, box-shadow .2s, border-color .2s`;
   cardObs.observe(el);
 });
-</script>
 
-  <!-- BACKGROUND MUSIC -->
-<audio id="bgMusic" autoplay loop style="display:none;">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2820/2820-preview.mp3" type="audio/mpeg">
-</audio>
+// ── BACKGROUND MUSIC (Gentle & Polite Ambient) ──
+// Using Web Audio API to generate soft, calming ambient music
+// No external files needed — fully self-contained
 
-<script>
-  // Auto-play with low volume
-  const bgMusic = document.getElementById('bgMusic');
-  bgMusic.volume = 0.15; // 15% volume - very low and polite
-  
-  // Try to play (browsers may block auto-play)
-  bgMusic.play().catch(() => {
-    // If auto-play fails, play on first user interaction
-    document.addEventListener('click', () => {
-      bgMusic.play();
-      bgMusic.volume = 0.15;
-    }, { once: true });
+let audioCtx = null;
+let musicPlaying = false;
+let musicNodes = [];
+let masterGain = null;
+
+function createAmbientMusic() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0;
+  masterGain.connect(audioCtx.destination);
+
+  // Soft pad chord (C major 7 — very gentle)
+  const padFreqs = [130.81, 164.81, 196.00, 246.94, 261.63, 329.63];
+  padFreqs.forEach((freq, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.value = 0.012 + (i * 0.002);
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start();
+    musicNodes.push({ osc, gain });
+
+    // Gentle frequency wobble for warmth
+    const lfo = audioCtx.createOscillator();
+    const lfoGain = audioCtx.createGain();
+    lfo.type = 'sine';
+    lfo.frequency.value = 0.08 + (i * 0.02);
+    lfoGain.gain.value = 0.3 + (i * 0.1);
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    lfo.start();
+    musicNodes.push({ osc: lfo, gain: lfoGain });
   });
-  
-  // Optional: Pause music when user calls (polite behavior)
-  document.querySelectorAll('a[href^="tel:"]').forEach(link => {
-    link.addEventListener('click', () => {
-      bgMusic.pause();
-    });
-  });
+
+  // Very soft high shimmer
+  const shimmer = audioCtx.createOscillator();
+  const shimmerGain = audioCtx.createGain();
+  shimmer.type = 'sine';
+  shimmer.frequency.value = 523.25;
+  shimmerGain.gain.value = 0.006;
+  shimmer.connect(shimmerGain);
+  shimmerGain.connect(masterGain);
+  shimmer.start();
+  musicNodes.push({ osc: shimmer, gain: shimmerGain });
+
+  // Shimmer LFO for gentle pulsing
+  const shimLfo = audioCtx.createOscillator();
+  const shimLfoGain = audioCtx.createGain();
+  shimLfo.type = 'sine';
+  shimLfo.frequency.value = 0.15;
+  shimLfoGain.gain.value = 0.004;
+  shimLfo.connect(shimLfoGain);
+  shimLfoGain.connect(shimmerGain.gain);
+  shimLfo.start();
+  musicNodes.push({ osc: shimLfo, gain: shimLfoGain });
+
+  // Gentle volume breathing effect on master
+  const breathLfo = audioCtx.createOscillator();
+  const breathGain = audioCtx.createGain();
+  breathLfo.type = 'sine';
+  breathLfo.frequency.value = 0.05; // Very slow breathing
+  breathGain.gain.value = 0.15;
+  breathLfo.connect(breathGain);
+  breathGain.connect(masterGain.gain);
+  breathLfo.start();
+  musicNodes.push({ osc: breathLfo, gain: breathGain });
+}
+
+function toggleMusic() {
+  const btn = document.getElementById('musicToggle');
+  const tooltip = document.getElementById('musicTooltip');
+
+  if (!musicPlaying) {
+    // Start music
+    if (!audioCtx) {
+      createAmbientMusic();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    // Fade in gently over 2 seconds
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 2);
+
+    btn.classList.add('playing');
+    musicPlaying = true;
+    tooltip.textContent = '🔇 Click to mute music';
+    tooltip.classList.add('show');
+    setTimeout(() => tooltip.classList.remove('show'), 2000);
+  } else {
+    // Fade out gently over 1.5 seconds
+    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+
+    btn.classList.remove('playing');
+    musicPlaying = false;
+    tooltip.textContent = '🎵 Click to play soothing music';
+    tooltip.classList.add('show');
+    setTimeout(() => tooltip.classList.remove('show'), 2000);
+  }
+}
+
+// Show tooltip hint after 3 seconds
+setTimeout(() => {
+  const tooltip = document.getElementById('musicTooltip');
+  tooltip.classList.add('show');
+  setTimeout(() => tooltip.classList.remove('show'), 4000);
+}, 3000);
 </script>
 </body>
 </html>
